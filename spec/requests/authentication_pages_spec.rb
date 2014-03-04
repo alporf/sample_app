@@ -62,7 +62,7 @@ describe "Authentication" do
           it "should render the desired protected page" do
             expect(page).to have_title('Edit user')
           end
-        end
+        end 
       end
       
       describe "as non-admin user" do
@@ -95,6 +95,21 @@ describe "Authentication" do
         end
         
       end
+    
+      describe "in the Micorposts controller" do
+        
+        describe "submitting to the create action" do
+          before { post microposts_path }
+          specify { expect(response).to redirect_to(signin_path) }
+        end
+        
+        describe "submitting to the destory action" do
+          before { delete micropost_path(FactoryGirl.create(:micropost)) }
+          specify { expect(response).to redirect_to(signin_path) }
+        end
+        
+      end
+    
     end
     
     describe "as wrong user" do
